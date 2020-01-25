@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  db:
+    image: mongo
+    restart: always
+    network_mode: bridge
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  nginx:
+    build:
+      dockerfile: docker/nginx/Dockerfile
+      context: ./
+    expose:
+      - 80
+    volumes:
+      - .:/app
+      - ~/.bash_history:/root/.bash_history
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      WEB_ALIAS_DOMAIN: ${PROJECT_NAME}
+      WEB_DOCUMENT_ROOT: /app/public/
+      WEB_DOCUMENT_INDEX: index.php
+      PHP_DATE_TIMEZONE: Europe/Warsaw
+    links:
+      - db
+    network_mode: bridge
+    restart: always
