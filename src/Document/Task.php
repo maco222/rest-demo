@@ -31,6 +31,12 @@ class Task
     protected $content;
 
     /**
+     * @MongoDB\Field(type="boolean")
+     * @var boolean
+     */
+    protected $is_done;
+
+    /**
      * @MongoDB\Field(type="date")
      * @var \DateTime
      */
@@ -42,6 +48,7 @@ class Task
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->setIsDone(false);
     }
 
     /**
@@ -99,4 +106,22 @@ class Task
     {
         $this->created_at = $created_at;
     }
+
+    /**
+     * @return bool
+     */
+    public function isIsDone(): bool
+    {
+        return $this->is_done;
+    }
+
+    /**
+     * @param bool $is_done
+     */
+    public function setIsDone(bool $is_done): void
+    {
+        $this->is_done = $is_done;
+    }
+
+
 }
