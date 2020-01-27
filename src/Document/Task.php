@@ -3,6 +3,7 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Task
@@ -19,6 +20,7 @@ class Task
     /**
      * @MongoDB\Field(type="string")
      * @var string
+     * @Assert\NotBlank()
      */
     protected $title;
 
@@ -35,9 +37,17 @@ class Task
     protected $created_at;
 
     /**
+     * Task constructor.
+     */
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -45,7 +55,7 @@ class Task
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -61,7 +71,7 @@ class Task
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }

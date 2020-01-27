@@ -46,6 +46,11 @@ services:
       WEB_DOCUMENT_ROOT: /app/public/
       WEB_DOCUMENT_INDEX: index.php
       PHP_DATE_TIMEZONE: Europe/Warsaw
+      PHP_DEBUGGER: xdebug
+      XDEBUG_REMOTE_AUTOSTART: 1
+      XDEBUG_REMOTE_CONNECT_BACK: 1
+      XDEBUG_REMOTE_PORT: 9000
+      XDEBUG_REMOTE_HOST: 192.168.1.129
     links:
       - db
     network_mode: bridge

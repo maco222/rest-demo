@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Document\Task;
+use App\Form\TaskType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -44,8 +46,18 @@ class TaskController extends AbstractFOSRestController
         return $this->view($data, $data ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
     }
 
-    public function postTaskAction()
+    public function postTaskAction(Request $request)
     {
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task);
+        $form->submit($request->request->all());
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->repository->getDocumentManager()->persist($task);
+            $this->repository->getDocumentManager()->flush();
+            return $this->view($task, Response::HTTP_OK);
+        }
+        return $form;
     }
 
     public function putTaskAction()
