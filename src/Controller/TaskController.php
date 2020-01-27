@@ -2,22 +2,53 @@
 
 namespace App\Controller;
 
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Document\Task;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TaskController
- * @package App\Controller
  */
-class TaskController extends AbstractController
+class TaskController extends AbstractFOSRestController
 {
+    /** @var DocumentRepository */
+    protected $repository;
+
     /**
-     * @Rest\Route(path="/api/task", name="task_list")
+     * TaskController constructor.
+     * @param DocumentManager $dm
      */
-    public function list()
+    public function __construct(DocumentManager $dm)
     {
-        return new JsonResponse(["success" => true]);
+        $this->repository = $dm->getRepository(Task::class);
+    }
+
+    /**
+     * @return \FOS\RestBundle\View\View
+     */
+    public function getTasksAction()
+    {
+        $data = $this->repository->findAll();
+        return $this->view($data, Response::HTTP_OK);
+    }
+
+    /**
+     * @param string $id
+     * @return \FOS\RestBundle\View\View
+     */
+    public function getTaskAction(string $id)
+    {
+        $data = $this->repository->findOneBy(["id" => $id]);
+        return $this->view($data, $data ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
+    }
+
+    public function postTaskAction()
+    {
+    }
+
+    public function putTaskAction()
+    {
     }
 }
-
