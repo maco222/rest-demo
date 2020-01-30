@@ -6,7 +6,7 @@ fos_rest:
   body_listener: true
   format_listener:
     rules:
-      - { path: ^/, fallback_format: json, priorities: [json] }
+      - { path: ^/, fallback_format: json, priorities: [json, html] }
   param_fetcher_listener: true
   exception:
     enabled: true

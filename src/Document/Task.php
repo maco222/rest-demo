@@ -4,6 +4,7 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
  * Class Task
@@ -13,12 +14,14 @@ class Task
 {
     /**
      * @MongoDB\Id
+     * @SWG\Property(type="integer")
      * @var int
      */
     protected $id;
 
     /**
      * @MongoDB\Field(type="string")
+     * @SWG\Property(type="string")
      * @var string
      * @Assert\NotBlank()
      */
@@ -26,18 +29,21 @@ class Task
 
     /**
      * @MongoDB\Field(type="string")
+     * @SWG\Property(type="string")
      * @var string
      */
     protected $content;
 
     /**
      * @MongoDB\Field(type="boolean")
+     * @SWG\Property(type="boolean")
      * @var boolean
      */
     protected $is_done;
 
     /**
      * @MongoDB\Field(type="date")
+     * @SWG\Property(type="string", format="date-time")
      * @var \DateTime
      */
     protected $created_at;

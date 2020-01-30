@@ -9,9 +9,12 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 /**
  * Class TaskController
+ * @SWG\Tag(name="tasks")
  */
 class TaskController extends AbstractFOSRestController
 {
@@ -28,6 +31,12 @@ class TaskController extends AbstractFOSRestController
     }
 
     /**
+     * List of all tasks
+     * @SWG\Response(
+     *     response=200,
+     *     description="Array of Task objects",
+     *     @Model(type=App\Document\Task::class)
+     * )
      * @return \FOS\RestBundle\View\View
      */
     public function getTasksAction()
@@ -37,6 +46,14 @@ class TaskController extends AbstractFOSRestController
     }
 
     /**
+     * Single Task by its id
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Single Task object",
+     *     @Model(type=App\Document\Task::class)
+     * )
+     *
      * @param string $id
      * @return \FOS\RestBundle\View\View
      */
@@ -46,6 +63,19 @@ class TaskController extends AbstractFOSRestController
         return $this->view($data, $data ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
     }
 
+    /**
+     * New Task
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Single Task object",
+     *     @Model(type=App\Document\Task::class)
+     * )
+     *
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View|\Symfony\Component\Form\FormInterface
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
     public function postTaskAction(Request $request)
     {
         $task = new Task();
@@ -60,6 +90,15 @@ class TaskController extends AbstractFOSRestController
         return $form;
     }
 
+    /**
+     * Modify Task
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Single Task object",
+     *     @Model(type=App\Document\Task::class)
+     * )
+     */
     public function putTaskAction()
     {
     }
