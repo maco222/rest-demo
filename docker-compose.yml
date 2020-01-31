@@ -5,6 +5,11 @@ services:
     image: 'bitnami/mongodb:latest'
     restart: always
     network_mode: bridge
+    hostname: db.docker
+    expose:
+      - 27017
+    ports:
+      - "27071:27071"
 #    volumes:
 #      - ./var/db:/bitnami
     environment:

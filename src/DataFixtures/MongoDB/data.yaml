@@ -1,0 +1,8 @@
+data:
+  task:
+    - { title: Sample Task 1, content: This is content of the task 1 }
+    - { title: Sample Task 2, content: This is content of the task 2 }
+    - { title: Sample Task 3, content: This is content of the task 3 }
+    - { title: Sample Task 4, content: This is content of the task 4 }
+    - { title: Sample Task 5, content: This is content of the task 5 }
+    - { title: Sample Task 6, content: This is content of the task 6 }

@@ -5,10 +5,12 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Class Task
  * @MongoDB\Document
+ * @Hateoas\Relation("self", href = @Hateoas\Route("get_tasks", parameters = { "task" = "expr(object.getId())" }))
  */
 class Task
 {
@@ -58,9 +60,9 @@ class Task
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
